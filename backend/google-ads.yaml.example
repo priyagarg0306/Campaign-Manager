@@ -1,0 +1,18 @@
+# Google Ads API Configuration
+# Copy this file to google-ads.yaml and fill in your credentials
+
+# Your Google Ads API developer token
+developer_token: YOUR_DEVELOPER_TOKEN
+
+# OAuth2 credentials from Google Cloud Console
+client_id: YOUR_CLIENT_ID.apps.googleusercontent.com
+client_secret: YOUR_CLIENT_SECRET
+
+# Refresh token obtained through OAuth2 flow
+refresh_token: YOUR_REFRESH_TOKEN
+
+# Your manager account (MCC) ID - remove dashes
+login_customer_id: "1234567890"
+
+# Use proto-plus for better performance
+use_proto_plus: true

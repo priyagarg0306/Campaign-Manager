@@ -1,0 +1,77 @@
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: google_ads_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: google_ads_manager
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Flask Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: google_ads_backend
+    env_file:
+      - ./backend/.env
+    environment:
+      - HOST=0.0.0.0
+      - PORT=5001
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/google_ads_manager
+    ports:
+      - "5001:5001"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+    restart: unless-stopped
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: google_ads_frontend
+    ports:
+      - "3001:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  # Startup message - prints URLs when all services are ready
+  startup-message:
+    image: alpine:latest
+    container_name: google_ads_startup
+    depends_on:
+      - frontend
+      - backend
+    command: >
+      sh -c "
+        sleep 5;
+        echo '';
+        echo '============================================================';
+        echo '  Google Ads Campaign Manager - All Services Started!';
+        echo '============================================================';
+        echo '';
+        echo '  Frontend:     http://localhost:3001';
+        echo '  Backend API:  http://localhost:5001/api';
+        echo '';
+        echo '  Health Check: http://localhost:5001/api/health';
+        echo '============================================================';
+        echo '';
+      "
+
+volumes:
+  postgres_data:

@@ -1,0 +1,145 @@
+/**
+ * InfoTooltip Component Styles
+ */
+
+.info-tooltip {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 6px;
+  cursor: help;
+  color: #666;
+  position: relative;
+  vertical-align: middle;
+}
+
+.info-tooltip:hover {
+  color: #1a73e8;
+}
+
+.info-tooltip svg {
+  transition: color 0.15s ease;
+}
+
+/* Tooltip text container */
+.info-tooltip .tooltip-text {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  width: 280px;
+  max-width: 320px;
+  z-index: 1000;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+  pointer-events: none;
+}
+
+/* Tooltip list styling */
+.info-tooltip .tooltip-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.info-tooltip .tooltip-list li {
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.info-tooltip .tooltip-list li:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.info-tooltip .tooltip-list strong {
+  color: #8bb4f8;
+  font-weight: 600;
+}
+
+/* Arrow for tooltip */
+.info-tooltip .tooltip-text::after {
+  content: '';
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+}
+
+/* Position: top (default) */
+.info-tooltip--top .tooltip-text {
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.info-tooltip--top .tooltip-text::after {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-color: #333 transparent transparent transparent;
+}
+
+/* Position: bottom */
+.info-tooltip--bottom .tooltip-text {
+  top: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.info-tooltip--bottom .tooltip-text::after {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-color: transparent transparent #333 transparent;
+}
+
+/* Position: left */
+.info-tooltip--left .tooltip-text {
+  right: 125%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.info-tooltip--left .tooltip-text::after {
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-color: transparent transparent transparent #333;
+}
+
+/* Position: right */
+.info-tooltip--right .tooltip-text {
+  left: 125%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.info-tooltip--right .tooltip-text::after {
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-color: transparent #333 transparent transparent;
+}
+
+/* Show tooltip on hover */
+.info-tooltip:hover .tooltip-text,
+.info-tooltip:focus .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Ensure tooltip doesn't get cut off at edges */
+@media (max-width: 600px) {
+  .info-tooltip .tooltip-text {
+    width: 200px;
+    font-size: 11px;
+  }
+}
